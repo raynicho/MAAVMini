@@ -1,3 +1,6 @@
+#include <Adafruit_Sensor.h>
+#include <Adafruit_BNO055.h>
+
 #include "Arduino.h"
 #include "config.h"
 #include "def.h"
@@ -13,6 +16,9 @@ static void Device_Mag_getADC();
 static void Baro_init();
 static void Mag_init();
 static void ACC_init();
+
+//"bno" is our IMU
+Adafruit_BNO055 bno = Adafruit_BNO055();
 
 // ************************************************************************************************************
 // board orientation and setup
@@ -829,19 +835,29 @@ void ACC_getADC () {
 
 // ***** OUR CODE *****
 // ************************************************************************************************************
-// Bosch BNO055 Accelerometer Readings
+// Bosch BNO055 Accelerometer + Gyroscope
 // ************************************************************************************************************
 #if defined(BNO055)
 void ACC_init () {
-  
-
+  //Don't actually think that there's anything for us to put in here,
+  //since we defined bno at the top of this file
 }
 
 void ACC_get_ADC () {
-  
-
+  imu::Vector<3> accelerations = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER); //Do we want straight up accelerometer data, or do we want accel. minus gravity?
+  ACC_ORIENTATION(accelerations[0], accelerations[1], accelerations[2]);
+  ACC_Common();
 }
 
+void Gyro_init() {
+  //Basically nothing
+}
+
+void Gyro_getADC () {
+  imu::Vector<3> orientations = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
+  GYRO_ORIENTATION(orientations[0], orientations[1], orientations[2]);
+  GYRO_Common();
+}
 #endif
 // ***** OUR CODE *****
 
