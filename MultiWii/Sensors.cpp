@@ -1,3 +1,6 @@
+#include <Adafruit_Sensor.h>
+#include <Adafruit_BNO055.h>
+
 #include "Arduino.h"
 #include "config.h"
 #include "def.h"
