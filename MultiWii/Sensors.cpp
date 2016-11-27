@@ -844,7 +844,7 @@ void ACC_init () {
 }
 
 void ACC_get_ADC () {
-  imu::Vector<3> accelerations = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER); //Do we want straight up accelerometer data, or do we want accel. minus gravity?
+  imuAdafruit::Vector<3> accelerations = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER); //Do we want straight up accelerometer data, or do we want accel. minus gravity?
   ACC_ORIENTATION(accelerations[0], accelerations[1], accelerations[2]);
   ACC_Common();
 }
@@ -854,9 +854,11 @@ void Gyro_init() {
 }
 
 void Gyro_getADC () {
-  imu::Vector<3> orientations = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
-  GYRO_ORIENTATION(orientations[0], orientations[1], orientations[2]);
+  imuAdafruit::Vector<3> orientations = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
+  //GYRO_ORIENTATION(orientations[0], orientations[1], orientations[2]);
+  GYRO_ORIENTATION(100, 100, 100);
   GYRO_Common();
+  //Serial.print(String(orientations[1]) + ", " + String(orientations[2]) + ", " + String(orientations[3])); //Multiple definitions error???
 }
 #endif
 // ***** OUR CODE *****
