@@ -164,11 +164,11 @@
     /***************************    independent sensors    ********************************/
       /* leave it commented if you already checked a specific board above */
       /* I2C gyroscope */
-      #define WMP
+      //#define WMP
       //#define ITG3050
       //#define ITG3200
       //#define MPU3050
-      //#define L3G4200D
+      #define L3G4200D
       //#define MPU6050       //combo + ACC
       //#define LSM330        //combo + ACC
       
