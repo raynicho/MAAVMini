@@ -1642,6 +1642,15 @@
 /***************              Sensor Type definitions              ********************/
 /**************************************************************************************/
 
+#if defined(BNO055)
+  #define ACC 1
+  #define GYRO 1
+  /*
+   * #define MAG 1
+   * #define BARO 1
+   */
+#endif
+
 #if defined(ADXL345) || defined(BMA020) || defined(BMA180) || defined(BMA280) || defined(MMA7455) || defined(ADCACC) || defined(LIS3LV02) || defined(LSM303DLx_ACC) || defined(MPU6050) || defined(LSM330) || defined(MMA8451Q)
   #define ACC 1
 #else

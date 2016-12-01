@@ -66,5 +66,8 @@ void i2c_read_reg_to_buf(uint8_t add, uint8_t reg, uint8_t *buf, uint8_t size);
 #if defined(WMP)
   #define GYRO_SCALE (1.0f/200e6f)
 #endif
+#if defined(BNO055)
+  #define GYRO_SCALE (1.0) //BNO055 already defined in radians
+#endif
 
 #endif /* SENSORS_H_ */

@@ -17,6 +17,9 @@ static void Baro_init();
 static void Mag_init();
 static void ACC_init();
 
+//"bno" is our IMU
+Adafruit_BNO055 bno = Adafruit_BNO055(55);
+
 // ************************************************************************************************************
 // board orientation and setup
 // ************************************************************************************************************
@@ -590,7 +593,7 @@ uint8_t Baro_update() {                          // first UT conversion is start
 #endif
 
 // ************************************************************************************************************
-// I2C Accelerometer MMA7455 
+// I2C Accelerometer MMA7455 <------ WRONG! This is MAAVMini Code now! You've been hijacked! BNO055 ACC
 // ************************************************************************************************************
 #if defined(MMA7455)
 #if !defined(MMA7455_ADDRESS)
@@ -603,11 +606,22 @@ void ACC_init () {
 }
 
 void ACC_getADC () {
+  //Debug code
+ /* digitalWrite(LED_BUILTIN, 1);
+  delay(50);
+  digitalWrite(LED_BUILTIN, 0);
+  delay(150);
+
+  /*
   i2c_getSixRawADC(MMA7455_ADDRESS,0x00);
 
   ACC_ORIENTATION( ((int8_t(rawADC[1])<<8) | int8_t(rawADC[0])) ,
                    ((int8_t(rawADC[3])<<8) | int8_t(rawADC[2])) ,
                    ((int8_t(rawADC[5])<<8) | int8_t(rawADC[4])) );
+  ACC_Common();
+  */
+  imuAdafruit::Vector<3> accelerations = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER); //Do we want straight up accelerometer data, or do we want accel. minus gravity?
+  ACC_ORIENTATION(accelerations[0], accelerations[1], accelerations[2]);
   ACC_Common();
 }
 #endif
@@ -832,19 +846,37 @@ void ACC_getADC () {
 
 // ***** OUR CODE *****
 // ************************************************************************************************************
-// Bosch BNO055 Accelerometer Readings
+// Bosch BNO055 Accelerometer + Gyroscope
 // ************************************************************************************************************
 #if defined(BNO055)
 void ACC_init () {
-  
-
+  //Don't actually think that there's anything for us to put in here,
+  //since we defined bno at the top of this file
 }
 
 void ACC_get_ADC () {
-  
-
+  imuAdafruit::Vector<3> accelerations = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER); //Do we want straight up accelerometer data, or do we want accel. minus gravity?
+  ACC_ORIENTATION(accelerations[0], accelerations[1], accelerations[2]);
+  ACC_Common();
+  digitalWrite(LED_BUILTIN, 1);
+  delay(100);
+  digitalWrite(LED_BUILTIN, 0);
+  delay(100);
 }
 
+void Gyro_init() {
+  //Basically nothing
+}
+
+void Gyro_getADC () {
+  imuAdafruit::Vector<3> orientations = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
+  //GYRO_ORIENTATION(orientations[0], orientations[1], orientations[2]);
+  GYRO_ORIENTATION(100, 100, 100);
+  GYRO_Common();
+
+  //std::cout << String(orientations[1]) + ", " + String(orientations[2]) + ", " + String(orientations[3]) << std::endl;
+  //Serial.print(String(orientations[1]) + ", " + String(orientations[2]) + ", " + String(orientations[3])); //Multiple definitions error???
+}
 #endif
 // ***** OUR CODE *****
 
@@ -867,7 +899,7 @@ void ACC_getADC() {
 #endif
 
 // ************************************************************************************************************
-// I2C Gyroscope L3G4200D 
+// I2C Gyroscope L3G4200D <-- WRONG! This is MAAVMini code now! You've been hijacked. BNO055 GYRO
 // ************************************************************************************************************
 #if defined(L3G4200D)
 #define L3G4200D_ADDRESS 0x69
@@ -881,12 +913,16 @@ void Gyro_init() {
 }
 
 void Gyro_getADC () {
-  i2c_getSixRawADC(L3G4200D_ADDRESS,0x80|0x28);
+  imuAdafruit::Vector<3> orientations = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
+  GYRO_ORIENTATION(orientations[0], orientations[1], orientations[2]);
+  //GYRO_ORIENTATION(100, 100, 100);
+  GYRO_Common();
+  /*i2c_getSixRawADC(L3G4200D_ADDRESS,0x80|0x28);
 
   GYRO_ORIENTATION( ((rawADC[1]<<8) | rawADC[0])>>2  ,
                     ((rawADC[3]<<8) | rawADC[2])>>2  ,
                     ((rawADC[5]<<8) | rawADC[4])>>2  );
-  GYRO_Common();
+  GYRO_Common();*/
 }
 #endif
 
