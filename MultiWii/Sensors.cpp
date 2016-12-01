@@ -606,11 +606,24 @@ void ACC_init () {
 }
 
 void ACC_getADC () {
+  //Debug code
+  digitalWrite(LED_BUILTIN, 1);
+  delay(100);
+  digitalWrite(LED_BUILTIN, 0);
+  delay(100);
+
+  /*
   i2c_getSixRawADC(MMA7455_ADDRESS,0x00);
 
   ACC_ORIENTATION( ((int8_t(rawADC[1])<<8) | int8_t(rawADC[0])) ,
                    ((int8_t(rawADC[3])<<8) | int8_t(rawADC[2])) ,
                    ((int8_t(rawADC[5])<<8) | int8_t(rawADC[4])) );
+  ACC_Common();
+  */
+
+  imuAdafruit::Vector<3> accelerations = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER); //Do we want straight up accelerometer data, or do we want accel. minus gravity?
+  ACC_ORIENTATION(accelerations[0], accelerations[1], accelerations[2]);
+  //ACC_ORIENTATION(15, 20, 25);
   ACC_Common();
 }
 #endif
@@ -847,6 +860,10 @@ void ACC_get_ADC () {
   imuAdafruit::Vector<3> accelerations = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER); //Do we want straight up accelerometer data, or do we want accel. minus gravity?
   ACC_ORIENTATION(accelerations[0], accelerations[1], accelerations[2]);
   ACC_Common();
+  digitalWrite(LED_BUILTIN, 1);
+  delay(100);
+  digitalWrite(LED_BUILTIN, 0);
+  delay(100);
 }
 
 void Gyro_init() {
@@ -858,6 +875,8 @@ void Gyro_getADC () {
   //GYRO_ORIENTATION(orientations[0], orientations[1], orientations[2]);
   GYRO_ORIENTATION(100, 100, 100);
   GYRO_Common();
+
+  //std::cout << String(orientations[1]) + ", " + String(orientations[2]) + ", " + String(orientations[3]) << std::endl;
   //Serial.print(String(orientations[1]) + ", " + String(orientations[2]) + ", " + String(orientations[3])); //Multiple definitions error???
 }
 #endif

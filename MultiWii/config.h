@@ -159,12 +159,12 @@
       //#define MultiWii_32U4_SE_no_baro // Hextronik MultiWii_32U4_SE without the MS561101BA to free flash-memory for other functions
       //#define Flyduino9DOF       // Flyduino 9DOF IMU MPU6050+HMC5883l
       //#define Nano_Plane         // Multiwii Plane version with tail-front LSM330 sensor http://www.radiosait.ru/en/page_5324.html
-      #define BNO055 // ***** OUR SENSOR *****
+      //#define BNO055 // ***** OUR SENSOR *****
       
     /***************************    independent sensors    ********************************/
       /* leave it commented if you already checked a specific board above */
       /* I2C gyroscope */
-      //#define WMP
+      #define WMP
       //#define ITG3050
       //#define ITG3200
       //#define MPU3050
@@ -173,7 +173,7 @@
       //#define LSM330        //combo + ACC
       
       /* I2C accelerometer */
-      //#define MMA7455
+      #define MMA7455
       //#define ADXL345
       //#define BMA020
       //#define BMA180

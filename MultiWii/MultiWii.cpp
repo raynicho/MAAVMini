@@ -171,6 +171,7 @@ int16_t  errorAltitudeI = 0;
 // **************
 // gyro+acc IMU
 // **************
+
 int16_t gyroZero[3] = {0,0,0};
 
 imu_t imu;
@@ -820,6 +821,16 @@ void go_disarm() {
 
 // ******** Main Loop *********
 void loop () {
+  //For debugging
+  pinMode(LED_BUILTIN, OUTPUT);
+  /*
+  for (int i = 0; i < 10; i++) {
+    digitalWrite(LED_BUILTIN, 1);
+    delay(100);
+    digitalWrite(LED_BUILTIN, 0);
+    delay(100);
+  }*/
+  
   static uint8_t rcDelayCommand; // this indicates the number of time (multiple of RC measurement at 50Hz) the sticks must be maintained to run or switch off motors
   static uint8_t rcSticks;       // this hold sticks position for command combos
   uint8_t axis,i;
