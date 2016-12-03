@@ -28,6 +28,9 @@ March  2015     V2.4
 
 #include <avr/pgmspace.h>
 
+#include <Adafruit_Sensor.h>
+#include <Adafruit_BNO055.h>
+
 /*********** RC alias *****************/
 
 const char pidnames[] PROGMEM =
@@ -818,7 +821,8 @@ void go_disarm() {
     #endif
   }
 }
-
+//Adafruit_BNO055 bno = Adafruit_BNO055(55);
+//bno.setExtCrystalUse(true);
 // ******** Main Loop *********
 void loop () {
   //For debugging
