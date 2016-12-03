@@ -19,6 +19,10 @@ static void ACC_init();
 
 //"bno" is our IMU
 Adafruit_BNO055 bno = Adafruit_BNO055(55);
+//bno.setExtCrystalUse(true);
+
+
+
 
 // ************************************************************************************************************
 // board orientation and setup
@@ -603,6 +607,14 @@ uint8_t Baro_update() {                          // first UT conversion is start
 void ACC_init () {
   delay(10);
   i2c_writeReg(MMA7455_ADDRESS,0x16,0x21);
+  //Adafruit_BNO055 bno = Adafruit_BNO055(55);
+  /* Initialise the sensor */
+  if(!bno.begin())
+  {
+    /* There was a problem detecting the BNO055 ... check your connections */
+    while(1);
+  }
+  bno.setExtCrystalUse(true);
 }
 
 void ACC_getADC () {
@@ -621,7 +633,7 @@ void ACC_getADC () {
   ACC_Common();
   */
   imuAdafruit::Vector<3> accelerations = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER); //Do we want straight up accelerometer data, or do we want accel. minus gravity?
-  ACC_ORIENTATION(accelerations[0], accelerations[1], accelerations[2]);
+  ACC_ORIENTATION(accelerations[1], accelerations[0], accelerations[2]);
   ACC_Common();
 }
 #endif
@@ -910,12 +922,12 @@ void Gyro_init() {
   i2c_writeReg(L3G4200D_ADDRESS ,0x24 ,0x02 ); // CTRL_REG5   low pass filter enable
   delay(5);
   i2c_writeReg(L3G4200D_ADDRESS ,0x23 ,0x30); // CTRL_REG4 Select 2000dps
+  
 }
 
 void Gyro_getADC () {
-  imuAdafruit::Vector<3> orientations = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
-  GYRO_ORIENTATION(orientations[0], orientations[1], orientations[2]);
-  //GYRO_ORIENTATION(100, 100, 100);
+  imuAdafruit::Vector<3> orientations = bno.getVector(Adafruit_BNO055::VECTOR_GYROSCOPE);
+  GYRO_ORIENTATION(orientations[0], orientations[1], -orientations[2]);
   GYRO_Common();
   /*i2c_getSixRawADC(L3G4200D_ADDRESS,0x80|0x28);
 
