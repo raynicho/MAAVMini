@@ -2743,3 +2743,4 @@ void toggle_telemetry(uint8_t t) {
   #endif // LOG_PERMANENT_SERVICE_LIFETIME
 
 #endif // LOG_PERMANENT
+

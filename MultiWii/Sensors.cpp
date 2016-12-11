@@ -633,7 +633,7 @@ void ACC_getADC () {
   ACC_Common();
   */
   imuAdafruit::Vector<3> accelerations = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER); //Do we want straight up accelerometer data, or do we want accel. minus gravity?
-  ACC_ORIENTATION(accelerations[1], accelerations[0], accelerations[2]);
+  ACC_ORIENTATION(accelerations[1]*50, accelerations[0]*50, accelerations[2]*50);
   ACC_Common();
 }
 #endif
@@ -927,7 +927,7 @@ void Gyro_init() {
 
 void Gyro_getADC () {
   imuAdafruit::Vector<3> orientations = bno.getVector(Adafruit_BNO055::VECTOR_GYROSCOPE);
-  GYRO_ORIENTATION(orientations[0], orientations[1], -orientations[2]);
+  GYRO_ORIENTATION(orientations[0]*100, orientations[1]*100, -orientations[2]*100);
   GYRO_Common();
   /*i2c_getSixRawADC(L3G4200D_ADDRESS,0x80|0x28);
 
@@ -1606,3 +1606,4 @@ void initSensors() {
     if (i2c_errors_count == 0) break; // no error during init => init ok
   }
 }
+

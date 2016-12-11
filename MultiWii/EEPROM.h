@@ -24,3 +24,4 @@ bool recallGPSconf(void);
 #endif
 
 #endif /* EEPROM_H_ */
+

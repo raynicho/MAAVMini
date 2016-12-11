@@ -1251,7 +1251,7 @@ void loop () {
       case 0:
         taskOrder++;
         #if MAG
-          if (Mag_getADC() != 0) break; // 320 µs
+          if (Mag_getADC() != 0) break; // 320 Âµs
         #endif
       case 1:
         taskOrder++;
@@ -1542,3 +1542,4 @@ void loop () {
   #endif 
   writeMotors();
 }
+

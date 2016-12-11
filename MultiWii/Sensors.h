@@ -20,7 +20,7 @@ uint8_t i2c_readNak();
 void i2c_read_reg_to_buf(uint8_t add, uint8_t reg, uint8_t *buf, uint8_t size);
 
 #if defined(MMA7455)
-  #define ACC_1G 9.8
+  #define ACC_1G 9.8*50
 #endif
 #if defined(MMA8451Q)
   #define ACC_1G 512
@@ -62,7 +62,7 @@ void i2c_read_reg_to_buf(uint8_t add, uint8_t reg, uint8_t *buf, uint8_t size);
 #endif
 #if defined(L3G4200D) || defined(LSM330)
   //#define GYRO_SCALE ((PI)/(180.0f * 1000000.0f)) // 70 milli deg/s /digit => 1 deg/s = 1000/70 LSB
-  #define GYRO_SCALE 0.5*PI/1000000.0
+  #define GYRO_SCALE 0.5*PI/1000000.0/100.0
 #endif
 #if defined(WMP)
   #define GYRO_SCALE (1.0f/200e6f)
@@ -72,3 +72,4 @@ void i2c_read_reg_to_buf(uint8_t add, uint8_t reg, uint8_t *buf, uint8_t size);
 #endif
 
 #endif /* SENSORS_H_ */
+

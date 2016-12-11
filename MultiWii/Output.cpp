@@ -821,7 +821,7 @@ void initializeServo() {
       #endif
       #if (PRI_SERVO_FROM <= 7 && PRI_SERVO_TO >= 7) || (SEC_SERVO_FROM <= 7 && SEC_SERVO_TO >= 7) 
         pinMode(7,OUTPUT);
-        TCCR4A |= _BV(COM4B1); // connect pin 7 to timer 4 channel B
+        TCCR4A |= _BV(COM4B1); // connect pin 7 to timer 4 channel B MAAVA
       #endif
       #if (PRI_SERVO_FROM <= 8 && PRI_SERVO_TO >= 8) || (SEC_SERVO_FROM <= 8 && SEC_SERVO_TO >= 8) 
         #if defined(AIRPLANE) || defined(HELICOPTER)
@@ -1615,3 +1615,4 @@ void mixTable() {
   }
   #endif
 }
+

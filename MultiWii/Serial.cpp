@@ -239,3 +239,4 @@ void SerialSerialize(uint8_t port,uint8_t a) {
 void SerialWrite(uint8_t port,uint8_t c){
   SerialSerialize(port,c);UartSendData(port);
 }
+

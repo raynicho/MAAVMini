@@ -102,3 +102,4 @@ enum alrm_lvl_confirm {
 #define IS_ALARM_SET(fac, level) ( alarmArray[fac] == level )
 
 #endif /* ALARMS_H_ */
+
