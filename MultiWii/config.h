@@ -440,7 +440,7 @@ At this moment you can use this function only with WinGUI 2.3 release. MultiWiiC
 
     /*********************************    pin Layout     **********************************/
       /* activate this for a better pinlayout if all pins can be used => not possible on ProMicro */
-      //#define A32U4ALLPINS
+      #define A32U4ALLPINS
 
     /**********************************    PWM Setup     **********************************/
       /* activate all 6 hardware PWM outputs Motor 5 = D11 and 6 = D13. 
